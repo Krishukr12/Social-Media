@@ -4,6 +4,7 @@ const cors = require("cors");
 const connection = require("./config/db.js");
 const userRouter = require("./routes/user.routes.js");
 const postRouter = require("./routes/post.routes.js");
+
 require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("HomePage");
 });
+
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 
