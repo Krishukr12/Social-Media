@@ -21,6 +21,18 @@ app.get("/", (req, res) => {
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 
+//!....  Custom error handlers
+app.use((err, req, res, next) => {
+  const errStatus = err.status || 500;
+  const errMessage = err.message || "Internal Server Error";
+  res.status(errStatus).json({
+    success: false,
+    status: errStatus,
+    message: errMessage,
+    stack: err.stack,
+  });
+});
+
 //!.... Start the server
 app.listen(process.env.PORT || 8080, async () => {
   try {
