@@ -1,5 +1,6 @@
 const { createError } = require("../utils/error.js");
 const { isValidEmail } = require("../utils/validateEmail.js");
+const UserModel = require("../models/User.model.js");
 const validateUserData = async (req, res, next) => {
   // Destructure name and email from request body
   const { name, email, bio } = req.body;
@@ -12,7 +13,7 @@ const validateUserData = async (req, res, next) => {
   }
 
   // Check if email is already registered
-  const isEmailTaken = await UserModel.findOne({ email: req.body.email });
+  const isEmailTaken = await UserModel.findOne({ email: email });
   if (isEmailTaken) {
     return next(createError(409, "Email address is already registered."));
   }

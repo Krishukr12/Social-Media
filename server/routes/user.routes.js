@@ -5,6 +5,7 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/userController.js");
+
 const { validateUserData } = require("../middlewares/validateUserData.js");
 const userRouter = Router();
 

@@ -4,7 +4,7 @@ const cors = require("cors");
 const connection = require("./config/db.js");
 const userRouter = require("./routes/user.routes.js");
 const postRouter = require("./routes/post.routes.js");
-
+const userAnalyticsRouter = require("../server/routes/userAnalytics.routes.js");
 require("dotenv").config();
 
 const app = express();
@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
+app.use("/analytics/users", userAnalyticsRouter);
+
 app.use("/posts", postRouter);
 
 //!....  Custom error handlers
