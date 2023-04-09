@@ -1,15 +1,15 @@
 const PostModel = require("../models/Post.model.js");
 const { createError } = require("../utils/error.js");
 
+// Create a new Post
 const createNewPost = async (req, res, next) => {
   const { content } = req.body;
-  if (content.length === 0 || content.length > 300) {
-    return next(
-      createError(400, "Content length must be between 1 and 299 characters")
-    );
-  }
-
   try {
+    if (content.length === 0 || content.length > 300) {
+      return next(
+        createError(400, "Content length must be between 1 and 299 characters")
+      );
+    }
     const newPost = new PostModel(req.body);
     await newPost.save();
     res.status(200).send({ status: "success", post: newPost });
@@ -18,7 +18,7 @@ const createNewPost = async (req, res, next) => {
   }
 };
 
-//get post by id
+//Get post by id
 const getPost = async (req, res, next) => {
   try {
     const post = await PostModel.findById(req.params.id);
@@ -36,12 +36,13 @@ const getPost = async (req, res, next) => {
 const updatePost = async (req, res, next) => {
   const { content } = req.body;
   const postData = req.body;
-  if (content.length === 0 || content.length > 300) {
-    return next(
-      createError(400, "Content length must be between 1 and 299 characters")
-    );
-  }
+
   try {
+    if (content.length === 0 || content.length > 300) {
+      return next(
+        createError(400, "Content length must be between 1 and 299 characters")
+      );
+    }
     const updatedPost = await PostModel.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: postData },
@@ -96,13 +97,11 @@ const incrementLikeCount = async (req, res, next) => {
 const decrementLikeCount = async (req, res, next) => {
   try {
     const post = await PostModel.findById(req.params.id);
-
     if (post.likes <= 0) {
       return next(
         createError(400, "Cannot decrement likes: likes are already at 0")
       );
     }
-
     const updatedPost = await PostModel.findByIdAndUpdate(
       { _id: req.params.id },
       {
