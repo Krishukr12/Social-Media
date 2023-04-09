@@ -20,11 +20,18 @@ export const Navbar = () => {
           Home
         </Link>
         <Link
-          onClick={() => setActiveNav("/analytics")}
-          className={activeNav === "/analytics" ? classes.link : null}
-          to="/analytics"
+          onClick={() => setActiveNav("/useranalytics")}
+          className={activeNav === "/useranalytics" ? classes.link : null}
+          to="/useranalytics"
         >
-          Analytics
+          UserAnalytics
+        </Link>
+        <Link
+          onClick={() => setActiveNav("/postanalytics")}
+          className={activeNav === "/postanalytics" ? classes.link : null}
+          to="/postanalytics"
+        >
+          PostAnalytics
         </Link>
       </div>
     </div>

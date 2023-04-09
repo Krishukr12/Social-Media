@@ -1,0 +1,27 @@
+.main_container {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  font-weight: bolder;
+  justify-content: space-between;
+  padding: 0rem 7rem 0rem 7rem;
+  align-items: center;
+}
+
+.link_container {
+  display: flex;
+  gap: 0.5rem;
+}
+.link_container button {
+  background-color: rgb(31, 41, 55);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  height: 2.3rem;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
