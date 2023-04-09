@@ -6,11 +6,15 @@ import {
   IconButton,
   useColorModeValue,
   Skeleton,
+  useToast,
 } from "@chakra-ui/react";
 import { FaHeart, FaRegHeart, FaEdit, FaTrash } from "react-icons/fa";
+import axios from "axios";
+import config from "../../config/config";
 
-const PostCard = ({ loading }) => {
+const PostCard = ({ loading, item, refetchData }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const toast = useToast();
 
   const handleLike = () => {
     setIsLiked(true);
@@ -18,6 +22,23 @@ const PostCard = ({ loading }) => {
 
   const handleUnlike = () => {
     setIsLiked(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const deletedPost = await axios.delete(
+        `${config.apiUrl}/posts/${item._id}`
+      );
+      toast({
+        title: `${deletedPost?.data?.message}`,
+        status: "success",
+        isClosable: true,
+        position: "top",
+      });
+      refetchData();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const likeIcon = isLiked ? <FaHeart /> : <FaRegHeart />;
@@ -48,7 +69,11 @@ const PostCard = ({ loading }) => {
             onClick={isLiked ? handleUnlike : handleLike}
           />
           <IconButton aria-label="Edit post" icon={<FaEdit />} mr={2} />
-          <IconButton aria-label="Delete post" icon={<FaTrash />} />
+          <IconButton
+            onClick={ handleDelete}
+            aria-label="Delete post"
+            icon={<FaTrash />}
+          />
         </Flex>
       </Box>
     </Skeleton>
