@@ -5,25 +5,27 @@ const connection = require("./config/db.js");
 const userRouter = require("./routes/user.routes.js");
 const postRouter = require("./routes/post.routes.js");
 const userAnalyticsRouter = require("../server/routes/userAnalytics.routes.js");
+
 require("dotenv").config();
 
 const app = express();
 
-//!.... Middleware
+//  Middleware
 app.use(express.json());
 app.use(cors());
 
-//!.... Routes
 app.get("/", (req, res) => {
   res.send("HomePage");
 });
 
+//  User routes
 app.use("/users", userRouter);
 app.use("/analytics/users", userAnalyticsRouter);
 
+//  Post routes
 app.use("/posts", postRouter);
 
-//!....  Custom error handlers
+//  Customs error handlers
 app.use((err, req, res, next) => {
   const errStatus = err.status || 500;
   const errMessage = err.message || "Internal Server Error";
@@ -35,7 +37,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-//!.... Start the server
+//  Start the server
 app.listen(process.env.PORT || 8080, async () => {
   try {
     await connection;

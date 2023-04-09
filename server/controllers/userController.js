@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 // Import User model and error and email validation utilities
 const UserModel = require("../models/User.model.js");
-
 const { createError } = require("../../server/utils/error.js");
 
 // Create a new user
@@ -11,6 +10,7 @@ const createUser = async (req, res, next) => {
     // Create a new user and save to database
     const newUser = new UserModel(req.body);
     await newUser.save();
+
     // Send success response with created user data
     res.status(200).send({ status: "success", user: newUser });
   } catch (error) {
@@ -19,13 +19,10 @@ const createUser = async (req, res, next) => {
   }
 };
 
+// get User by ID
 const getUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    // Check if the user ID is a valid MongoDB ObjectId format
-    if (!mongoose.isValidObjectId(id))
-      return next(createError(400, "Invalid user ID format"));
-
     // Find the user by ID
     const user = await UserModel.findById(id);
 
@@ -40,11 +37,11 @@ const getUser = async (req, res, next) => {
   }
 };
 
+// Update user by id
 const updateUser = async (req, res, next) => {
   // Extract the user ID and updated user data from the request
   const { id } = req.params;
   const userData = req.body;
-
   try {
     // Use Mongoose to find and update the user with the given ID
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -68,9 +65,10 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+//Delete a user by id
 const deleteUser = async (req, res, next) => {
-  // Extract the user ID from the request parameters
   const { id } = req.params;
+
   try {
     // Use Mongoose to find and delete the user with the given ID
     const deletedUser = await UserModel.findByIdAndDelete(id);
@@ -79,6 +77,7 @@ const deleteUser = async (req, res, next) => {
     if (!deletedUser) {
       return next(createError(404, "User not found"));
     }
+
     // If the user was successfully deleted, return a success message
     res
       .status(200)
@@ -88,6 +87,7 @@ const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
 module.exports = {
   createUser,
   getUser,

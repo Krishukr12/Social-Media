@@ -1,26 +1,14 @@
 const { createError } = require("../utils/error.js");
-const { isValidEmail } = require("../utils/validateEmail.js");
-const UserModel = require("../models/User.model.js");
-
-const validateUserData = async (req, res, next) => {
-  const { name, email, bio } = req.body;
+const checkUpdateFields = (req, res, next) => {
+  const { email, name, bio } = req.body;
+  if (email)
+    return next(createError(403, "Updating the email field is not allowed"));
 
   // Check if name is not empty and less than 50 characters
   if (!name || name.length > 50) {
     return next(
       createError(400, "Name must be provided and less than 50 characters.")
     );
-  }
-
-  // Check if email is already registered
-  const isEmailTaken = await UserModel.findOne({ email: email });
-  if (isEmailTaken) {
-    return next(createError(409, "Email address is already registered."));
-  }
-
-  // Check if email is valid
-  if (!isValidEmail(email)) {
-    return next(createError(400, "Invalid email address."));
   }
 
   // Check that the bio field, if present, has a length of 0 to 200 characters
@@ -34,4 +22,4 @@ const validateUserData = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateUserData };
+module.exports = { checkUpdateFields };
