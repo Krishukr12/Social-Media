@@ -20,7 +20,6 @@
   justify-content: center;
   align-items: center;
 }
-
-.link:active {
-  border-bottom: 1px solid red;
+.link {
+  border-bottom: 2px solid rgb(79, 70, 229);
 }
