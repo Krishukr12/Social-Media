@@ -22,8 +22,9 @@ const createNewPost = async (req, res, next) => {
 const getPost = async (req, res, next) => {
   try {
     const post = await PostModel.findById(req.params.id);
-    // If post not found, send a 404 error response to the client
+    // If post not found,
     if (!post) return next(createError(400, "Post not found"));
+
     // Send a success response to the client with the post data
     res.status(200).send({ status: "success", post: post });
   } catch (error) {
@@ -32,8 +33,25 @@ const getPost = async (req, res, next) => {
 };
 
 // update post by id
-const updatePost = (req, res, next) => {
-  res.send("post update");
+const updatePost = async (req, res, next) => {
+  const { content } = req.body;
+  const postData = req.body;
+  if (content.length === 0 || content.length > 300) {
+    return next(
+      createError(400, "Content length must be between 1 and 299 characters")
+    );
+  }
+  try {
+    const updatedPost = await PostModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $set: postData },
+      { new: true }
+    );
+    // If the post was successfully updated,
+    res.status(200).send({ status: "success", post: updatedPost });
+  } catch (error) {
+    next(error);
+  }
 };
 
 // delete post by id
@@ -56,18 +74,17 @@ const deletePost = async (req, res, next) => {
 // Increment the like count of a post by id.
 const incrementLikeCount = async (req, res, next) => {
   try {
-    const post = await PostModel.findById(req.params.id);
-
-    const IncCount = await PostModel.updateOne(
+    const updatePost = await PostModel.findByIdAndUpdate(
       { _id: req.params.id },
       {
         $inc: { likes: 1 },
-      }
+      },
+      { new: true }
     );
 
     res.status(200).send({
       status: "success",
-      likes: post.likes + 1,
+      likes: updatePost.likes,
       message: "Likes updated successfully",
     });
   } catch (error) {
@@ -86,16 +103,17 @@ const decrementLikeCount = async (req, res, next) => {
       );
     }
 
-    const decCount = await PostModel.updateOne(
+    const updatedPost = await PostModel.findByIdAndUpdate(
       { _id: req.params.id },
       {
         $inc: { likes: -1 },
-      }
+      },
+      { new: true }
     );
     res.status(200).send({
       status: "success",
       message: "Likes updated successfully",
-      likes: post.likes - 1,
+      likes: updatedPost.likes,
     });
   } catch (error) {
     next(error);
