@@ -7,8 +7,10 @@ export const SecondaryNav = () => {
     <div className={classes.main_container}>
       <div>Electives</div>
       <div className={classes.link_container}>
-        <Button colorScheme="gray">FAq</Button>
-        <Button>CATALOG</Button>
+        <Button>Posts</Button>
+        <Button>Users</Button>
+        <Button>Create and update User</Button>
+        <Button>Create and update Post</Button>
       </div>
     </div>
   );
