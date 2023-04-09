@@ -5,11 +5,11 @@ const { createError } = require("../utils/error.js");
 const createNewPost = async (req, res, next) => {
   const { content } = req.body;
   try {
-    if (content.length === 0 || content.length > 300) {
+    if (content.length === 0 || content.length > 300)
       return next(
         createError(400, "Content length must be between 1 and 299 characters")
       );
-    }
+
     const newPost = new PostModel(req.body);
     await newPost.save();
     res.status(200).send({ status: "success", post: newPost });

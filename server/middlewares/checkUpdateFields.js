@@ -3,13 +3,14 @@ const { createError } = require("../utils/error.js");
 // To check before update
 const checkUpdateFields = (req, res, next) => {
   const { email, name, bio } = req.body;
-  if (email)
+  if (email) {
     return next(createError(403, "Updating the email field is not allowed"));
+  }
 
   // Check if name is not empty and less than 50 characters
   if (!name || name.length > 50) {
     return next(
-      createError(400, "Name must be provided and less than 50 characters.")
+      createError(400, "Name must be provided and be less than 50 characters.")
     );
   }
 

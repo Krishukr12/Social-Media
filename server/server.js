@@ -4,7 +4,9 @@ const cors = require("cors");
 const connection = require("./config/db.js");
 const userRouter = require("./routes/user.routes.js");
 const postRouter = require("./routes/post.routes.js");
+
 const userAnalyticsRouter = require("../server/routes/userAnalytics.routes.js");
+const { postAnalyticsRouter } = require("./routes/postsAnalytics.routes.js");
 
 require("dotenv").config();
 
@@ -24,6 +26,7 @@ app.use("/analytics/users", userAnalyticsRouter);
 
 //  Post routes
 app.use("/posts", postRouter);
+app.use("/analytics/posts", postAnalyticsRouter);
 
 //  Customs error handlers
 app.use((err, req, res, next) => {

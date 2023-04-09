@@ -9,6 +9,7 @@ const {
 
 const { validateUserData } = require("../middlewares/validateUserData.js");
 const { checkUpdateFields } = require("../middlewares/checkUpdateFields.js");
+
 const userRouter = Router();
 
 // Create a new user
