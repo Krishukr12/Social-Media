@@ -7,7 +7,9 @@ export const AllPosts = () => {
   const { data, isLoading, error, refetchData } = useFetch(
     `${config.apiUrl}/posts`
   );
+
   const tempData = new Array(8).fill(0);
+
   return (
     <Grid w={"75%"} m={"auto"} templateColumns="repeat(4, 1fr)" gap={4}>
       {isLoading ? (

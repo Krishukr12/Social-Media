@@ -9,6 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { FaHeart, FaRegHeart, FaEdit, FaTrash } from "react-icons/fa";
+
 import axios from "axios";
 import config from "../../config/config";
 
@@ -16,12 +17,48 @@ const PostCard = ({ loading, item, refetchData }) => {
   const [isLiked, setIsLiked] = useState(false);
   const toast = useToast();
 
-  const handleLike = () => {
+  const handleLike = async () => {
     setIsLiked(true);
+    try {
+      await axios.post(`${config.apiUrl}/posts/${item._id}/like`);
+      toast({
+        title: `Post liked`,
+        status: "success",
+        isClosable: true,
+        position: "top",
+        duration: 500,
+      });
+    } catch (error) {
+      toast({
+        title: `${error?.message}`,
+        status: "error",
+        isClosable: true,
+        position: "top",
+        duration: 500,
+      });
+    }
   };
 
-  const handleUnlike = () => {
+  const handleUnlike = async () => {
     setIsLiked(false);
+    try {
+      await axios.post(`${config.apiUrl}/posts/${item._id}/unlike`);
+      toast({
+        title: `Post Disliked`,
+        status: "info",
+        isClosable: true,
+        position: "top",
+        duration: 500,
+      });
+    } catch (error) {
+      toast({
+        title: `${error?.message}`,
+        status: "error",
+        isClosable: true,
+        position: "top",
+        duration: 500,
+      });
+    }
   };
 
   const handleDelete = async () => {
@@ -34,10 +71,17 @@ const PostCard = ({ loading, item, refetchData }) => {
         status: "success",
         isClosable: true,
         position: "top",
+        duration: 500,
       });
       refetchData();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `${error?.message}`,
+        status: "error",
+        isClosable: true,
+        position: "top",
+        duration: 500,
+      });
     }
   };
 
@@ -56,11 +100,7 @@ const PostCard = ({ loading, item, refetchData }) => {
         w={"250px"}
       >
         <Box px={4} py={2}>
-          <Text>
-            iis incidunt deleniti, repellat, ab alias , fugit hic quae
-            consequuntur ratione quod repudiandae voluptatum accusantium sunt a
-            debitis nisi! Nobis, voluptate cumque! Veniam ipsum est porro.
-          </Text>
+          <Text>{item?.content}</Text>
         </Box>
         <Flex align="center" justify="space-between" px={4} py={2}>
           <IconButton
@@ -70,7 +110,7 @@ const PostCard = ({ loading, item, refetchData }) => {
           />
           <IconButton aria-label="Edit post" icon={<FaEdit />} mr={2} />
           <IconButton
-            onClick={ handleDelete}
+            onClick={handleDelete}
             aria-label="Delete post"
             icon={<FaTrash />}
           />
