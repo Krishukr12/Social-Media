@@ -25,3 +25,9 @@
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
 }
+
+.title {
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
