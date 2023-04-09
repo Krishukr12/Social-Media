@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const connection = require("./config/db.js");
+const { connection } = require("./config/db.js");
 const userRouter = require("./routes/user.routes.js");
 const postRouter = require("./routes/post.routes.js");
 
@@ -12,12 +12,12 @@ require("dotenv").config();
 
 const app = express();
 
-//  Middleware
+//  Compulsory Middleware
 app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("HomePage");
+  res.send("Welcome!");
 });
 
 //  User routes

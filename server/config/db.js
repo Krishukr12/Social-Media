@@ -13,4 +13,4 @@ mongoose.connection.on("disconnected", () => {
   console.log("connection is unestablished");
 });
 
-module.exports = connection;
+module.exports = { connection };

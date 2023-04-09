@@ -1,7 +1,7 @@
 const { Router } = require("express");
 
 const userAnalyticsRouter = Router();
-
+// Import the functions from the postAnalyticsController module
 const {
   getUserCount,
   getTop5ActiveUsers,

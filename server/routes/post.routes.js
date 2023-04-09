@@ -2,6 +2,7 @@ const { Router } = require("express");
 
 const postRouter = Router();
 
+// Import the functions from the postController module
 const {
   createNewPost,
   getPost,
@@ -23,7 +24,7 @@ postRouter.put("/:id", updatePost);
 //Delete a post by id.
 postRouter.delete("/:id", deletePost);
 
-// Increment like count of posts
+// Increment like count of post by id
 postRouter.post("/:id/like", incrementLikeCount);
 
 //Decrement the like count of a post by id.

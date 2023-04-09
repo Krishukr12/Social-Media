@@ -1,6 +1,6 @@
 const { createError } = require("../utils/error.js");
 
-// To check before update
+// To check before update to ensure all fields are in correct format
 const checkUpdateFields = (req, res, next) => {
   const { email, name, bio } = req.body;
   if (email) {

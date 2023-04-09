@@ -1,5 +1,6 @@
 const { Router } = require("express");
 
+// Import the functions from the userController module
 const {
   createUser,
   getUser,
@@ -7,6 +8,7 @@ const {
   deleteUser,
 } = require("../controllers/userController.js");
 
+// import validate UserData and checkUpdates middleware
 const { validateUserData } = require("../middlewares/validateUserData.js");
 const { checkUpdateFields } = require("../middlewares/checkUpdateFields.js");
 
