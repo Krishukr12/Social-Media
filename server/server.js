@@ -50,3 +50,6 @@ app.listen(process.env.PORT || 8080, async () => {
     console.log(error);
   }
 });
+module.exports = {
+  app,
+};

@@ -17,6 +17,17 @@ const createUser = async (req, res, next) => {
   }
 };
 
+// get all users
+
+const getAllUsers = async (req, res, next) => {
+  try {
+    const AllUser = await UserModel.find({});
+    res.status(200).send({ status: "success", Users: AllUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // get User by ID
 const getUser = async (req, res, next) => {
   const { id } = req.params;
@@ -85,4 +96,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  getAllUsers,
 };

@@ -6,6 +6,7 @@ const {
   getUser,
   updateUser,
   deleteUser,
+  getAllUsers,
 } = require("../controllers/userController.js");
 
 // import validate UserData and checkUpdates middleware
@@ -16,6 +17,9 @@ const userRouter = Router();
 
 // Create a new user
 userRouter.post("/", validateUserData, createUser);
+
+// get all users
+userRouter.get("/", getAllUsers);
 
 //Retrieve a user by id.
 userRouter.get("/:id", getUser);

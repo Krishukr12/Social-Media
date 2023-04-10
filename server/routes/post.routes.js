@@ -10,10 +10,14 @@ const {
   deletePost,
   incrementLikeCount,
   decrementLikeCount,
+  getAllPosts,
 } = require("../controllers/postController.js");
 
 // create a new post
 postRouter.post("/", createNewPost);
+
+// get all posts
+postRouter.get("/", getAllPosts);
 
 // get post by id
 postRouter.get("/:id", getPost);

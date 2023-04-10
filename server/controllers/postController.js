@@ -18,6 +18,15 @@ const createNewPost = async (req, res, next) => {
   }
 };
 
+const getAllPosts = async (req, res, next) => {
+  try {
+    const allPosts = await PostModel.find({});
+    res.status(200).send({ status: "success", post: allPosts });
+  } catch (error) {
+    next(error);
+  }
+};
+
 //Get post by id
 const getPost = async (req, res, next) => {
   try {
@@ -66,7 +75,7 @@ const deletePost = async (req, res, next) => {
     // If the post was successfully deleted, return a success message
     res
       .status(200)
-      .json({ status: "success", message: "Post has been deleted" });
+      .send({ status: "success", message: "Post has been deleted" });
   } catch (error) {
     next(error);
   }
@@ -124,6 +133,7 @@ module.exports = {
   getPost,
   updatePost,
   deletePost,
+  getAllPosts,
   incrementLikeCount,
   decrementLikeCount,
 };
